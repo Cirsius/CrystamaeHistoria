@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -32,7 +33,12 @@ public class Hellscape extends Spell {
 
     @ParametersAreNonnullByDefault
     public void fireProjectiles(CastInformation castInformation) {
-        final Location middle = castInformation.getCasterAsPlayer().getLocation().clone().add(0, 1, 0);
+        final Player caster = castInformation.getCasterAsPlayer();
+        if (caster == null) {
+            return;
+        }
+
+        final Location middle = caster.getLocation().clone().add(0, 1, 0);
 
         for (double angle = 0; angle < Math.PI * 2; angle += Math.PI / 20) {
             final double rotated = angle + (castInformation.getCurrentTick() * 10);
@@ -55,7 +61,7 @@ public class Hellscape extends Spell {
                 livingEntity,
                 castInformation.getCaster(),
                 getDamage(castInformation),
-                castInformation.getCasterAsPlayer().getLocation(),
+                castInformation.getDamageLocation(),
                 getKnockback(castInformation)
             );
         }
