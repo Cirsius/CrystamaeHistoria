@@ -2,6 +2,8 @@
 /lib/
 /.settings/
 /target/
+/build/
+/.gradle/
 /.idea/
 *.iml
 .project
