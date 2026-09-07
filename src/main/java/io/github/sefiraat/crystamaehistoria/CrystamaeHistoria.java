@@ -233,7 +233,7 @@ public class CrystamaeHistoria extends AbstractAddon {
         }
 
         spellMemory.clearAll();
-        configManager.saveAll();
+        configManager.shutdown();
         instance = null;
     }
 

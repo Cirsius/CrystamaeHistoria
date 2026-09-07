@@ -22,7 +22,8 @@ public class RunnableManager {
         this.temporaryEffectsRunnable.runTaskTimer(plugin, 1, 20);
 
         this.saveConfigRunnable = new SaveConfigRunnable();
-        this.saveConfigRunnable.runTaskTimer(plugin, 1, 12000);
+        final long saveInterval = Math.max(20, plugin.getConfig().getInt("saving.interval-ticks", 12000));
+        this.saveConfigRunnable.runTaskTimer(plugin, 1, saveInterval);
 
         this.particleDisplayRunnable = new ParticleDisplayRunnable();
         this.particleDisplayRunnable.runTaskTimer(plugin, 1, 80);

@@ -1,4 +1,6 @@
 auto-update: true
+saving:
+  interval-ticks: 12000
 messages:
   spells:
     teleport_no_suitable_location: "No suitable place to teleport to"

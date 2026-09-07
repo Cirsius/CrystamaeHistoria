@@ -25,6 +25,7 @@ public class ConfigManager {
     private final FileConfiguration playerStats;
     private final FileConfiguration blockColors;
     private final FileConfiguration spells;
+    private final SaveManager saveManager;
 
     public ConfigManager() {
         this.blocks = getConfig("blocks.yml", true);
@@ -32,6 +33,8 @@ public class ConfigManager {
         this.playerStats = getConfig("player_stats.yml", false);
         this.blockColors = getConfig("block_colors.yml", true);
         this.spells = getConfig("spells.yml", false);
+        final CrystamaeHistoria plugin = CrystamaeHistoria.getInstance();
+        this.saveManager = new SaveManager(plugin.getDataFolder().toPath(), plugin.getLogger());
     }
 
     @Nonnull
@@ -97,17 +100,13 @@ public class ConfigManager {
     }
 
     public void saveAll() {
-        CrystamaeHistoria.getInstance().getLogger().info("Crystamae saving data.");
-        CrystamaeHistoria.getInstance().getConfig().save();
-        saveResearches();
+        final CrystamaeHistoria plugin = CrystamaeHistoria.getInstance();
+        plugin.getLogger().info("Crystamae saving data.");
+        saveManager.save(plugin.getConfig().saveToString(), playerStats);
     }
 
-    private void saveResearches() {
-        File file = new File(CrystamaeHistoria.getInstance().getDataFolder(), "player_stats.yml");
-        try {
-            playerStats.save(file);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public void shutdown() {
+        final CrystamaeHistoria plugin = CrystamaeHistoria.getInstance();
+        saveManager.shutdown(plugin.getConfig().saveToString(), playerStats);
     }
 }
