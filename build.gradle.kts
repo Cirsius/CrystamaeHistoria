@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.sefiraat.crystamaehistoria"
-version = ""
+version = "MODIFIED"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
